@@ -1,0 +1,18 @@
+{
+    "name": "beaucollins/psalm-failure",
+    "description": "Psalm inheritance failure",
+    "authors": [
+        {
+            "name": "Beau Collins",
+            "email": "beau@collins.pub"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Collins\\": "src/" }
+    },
+    "require": {},
+    "require-dev": {
+        "vimeo/psalm": "^3.10",
+        "giacocorsiglia/wordpress-stubs": "^5.1"
+    }
+}

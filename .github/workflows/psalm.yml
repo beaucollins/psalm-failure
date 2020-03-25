@@ -1,0 +1,41 @@
+name: WordPress CI
+
+on: [push]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    # https://github.com/actions/cache/blob/master/examples.md#php---composer
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    - uses: actions/cache@v1
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
+    - name: Install dependencies
+      if: steps.composer-cache.outputs.cache-hit != 'true'
+      id: composer
+      run: composer install --prefer-dist --no-progress --no-suggest
+
+    - name: Setup Report Directory
+      run: mkdir -p ./reports
+
+    - name: Psalm
+      run: ./vendor/bin/psalm --report=reports/psalm.json
+
+    - uses: beaucollins/psalm-annotations-action@v1
+      if: always()
+      with:
+        report_path: ./reports/psalm.json
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

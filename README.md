@@ -26,6 +26,11 @@ UndefinedMethod
 Method Collins\CustomResponse::get_status does not exist
 ```
 
+For convenience the stubs used for these classes have been extracted and placed in `./sample-stubs.php`:
+
+- [`WP_REST_Response`](https://github.com/beaucollins/psalm-failure/blob/b52c3089b169233310fda1fcc3ab83383263850a/sample-stubs.php#L9)
+- [`WP_HTTP_Response`](https://github.com/beaucollins/psalm-failure/blob/b52c3089b169233310fda1fcc3ab83383263850a/sample-stubs.php#L183)
+
 ### Other Strangeness
 
 Psalm in this project is not finding errors that it should be:
